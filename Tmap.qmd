@@ -1,0 +1,44 @@
+---
+title: "Why tmap"
+format: html
+---
+```{r}
+install.packages("sf") # vector data
+install.packages("stars") # raster data 
+install.packages("tmap") # map making
+install.packages('here') # file paths
+
+```
+```{r}
+library(sf)
+library(stars)
+library(tmap)
+library(here)
+```
+
+
+```{r}
+# raster of global elevations
+world_elevation <- read_stars(here("data","worldelevation.tif"))
+
+# country boundaries
+world_vector <- read_sf(here("data","worldvector.gpkg"))
+
+# major cities
+world_cities <- read_sf(here("data","worldcities.gpkg"))
+```
+
+
+```{r}
+
+tm_shape(world_elevation) +
+  tm_raster() +
+tm_shape(world_vector) +  # making a map here, equivalent to saying ggplot(data = )
+  tm_borders() + # how to plot it, the shape
+tm_shape(world_cities) + # adding more data
+  tm_dots() # the shape of the data we are adding, a new layer to the map
+
+
+
+```
+
